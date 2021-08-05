@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
+using DentedPixel;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject _foodSlotGrid;
     [SerializeField] DropZone _dropZone;
+    [SerializeField] FoodSlot[] _dropSlots;
 
     FoodSlot[] _foodSlots;
+    int correctItems = 0;
 
     private void Awake()
     {
@@ -19,7 +22,30 @@ public class GameManager : MonoBehaviour
     }
 
     void OnDrop(GameObject obj, PointerEventData data) {
-        Debug.Log(data.pointerDrag.GetComponent<FoodItem>().Data.name + " dropped on " + obj.name);
+        FoodItem item = data.pointerDrag.GetComponent<FoodItem>();
+        Debug.Log(item.Data.name + " dropped on " + obj.name);
+
+        if (correctItems < 3) {
+            if (item.Data.produce)
+            {
+                CorrectItem(item);
+            }
+            else {
+                WrongItem(item);
+            }
+        }
+    }
+
+    void CorrectItem(FoodItem item)
+    {
+        Debug.Log("Correct!");
+        _dropSlots[correctItems++].AssignItem(item, true);
+        item.GetComponent<Draggable>().Locked = true;
+    }
+
+    void WrongItem(FoodItem item) {
+        Debug.Log("Wrong!");
+        LeanTween.move(item.gameObject, item.slot.transform, .5f).setEase(LeanTweenType.easeOutBounce);
     }
 
     private void Start()

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Image))]
 public class FoodItem : MonoBehaviour
@@ -9,6 +8,8 @@ public class FoodItem : MonoBehaviour
 
     [SerializeField] SO_Food _data;
 
+    public FoodSlot slot;
+
     Image _image;
 
     private void Awake()
@@ -16,7 +17,7 @@ public class FoodItem : MonoBehaviour
         _image = GetComponent<Image>();
     }
 
-    public void Assign(SO_Food data) {
+    public void SetData(SO_Food data) {
         if (data == null)
             return;
         _data = data;

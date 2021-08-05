@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class FoodSlot : MonoBehaviour
 {
     [SerializeField] GameObject foodItemPrefab;
 
-    FoodItem _item;
     RectTransform _rectTransform;
 
     const string _foodPath = "Foods/";
@@ -26,14 +22,20 @@ public class FoodSlot : MonoBehaviour
 
     public void GenerateFoodItem(FoodType type) {
         FoodItem item = GameObject.Instantiate(foodItemPrefab, transform).GetComponent<FoodItem>();
-        item.Assign(Resources.Load<SO_Food>($"{_foodPath}{type}"));
+        item.SetData(Resources.Load<SO_Food>($"{_foodPath}{type}"));
         AssignItem(item);
     }
 
-    void AssignItem(FoodItem item) {
-        _item = item;
-        _item.GetComponent<RectTransform>().sizeDelta = new Vector2(_rectTransform.rect.width, _rectTransform.rect.width);
-        _item.transform.position = transform.position;
+    public void AssignItem(FoodItem item, bool animation = false) {
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(_rectTransform.rect.width, _rectTransform.rect.width);
+        if (animation)
+        {
+            LeanTween.move(item.gameObject, transform, .2f);
+        }
+        else
+        {
+            item.transform.position = transform.position;
+        }
+        item.slot = this;
     }
-
 }
