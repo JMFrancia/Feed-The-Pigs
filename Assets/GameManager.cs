@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     void WrongItem(FoodItem item) {
         Debug.Log("Wrong!");
-        LeanTween.move(item.gameObject, item.slot.transform, .5f).setEase(LeanTweenType.easeOutBounce);
+        item.ReturnToSlot();
     }
 
     private void Start()

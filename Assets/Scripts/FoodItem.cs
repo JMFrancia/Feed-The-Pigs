@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Image))]
 public class FoodItem : MonoBehaviour
@@ -15,9 +16,21 @@ public class FoodItem : MonoBehaviour
     private void Awake()
     {
         _image = GetComponent<Image>();
+        GetComponent<Draggable>().OnEndDrag += OnEndDrag;
     }
 
-    public void SetData(SO_Food data) {
+    void OnEndDrag(PointerEventData data)
+    {
+        ReturnToSlot();
+    }
+
+    public void ReturnToSlot()
+    {
+        LeanTween.move(gameObject, slot.transform, .5f).setEase(LeanTweenType.easeOutBounce);
+    }
+
+    public void SetData(SO_Food data)
+    {
         if (data == null)
             return;
         _data = data;
