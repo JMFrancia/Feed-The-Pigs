@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4133271206443320119}
   - component: {fileID: 4133271206443320116}
   - component: {fileID: 4133271206443320117}
+  - component: {fileID: -6997260173006693651}
+  - component: {fileID: 7505983536311023139}
   m_Layer: 5
   m_Name: FoodItem
   m_TagString: Untagged
@@ -89,3 +91,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 0}
+--- !u!225 &-6997260173006693651
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4133271206443320115}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &7505983536311023139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4133271206443320115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81368855b99154ce89d9c3f129944745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

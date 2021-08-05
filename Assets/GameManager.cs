@@ -2,17 +2,24 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject _foodSlotGrid;
+    [SerializeField] DropZone _dropZone;
 
     FoodSlot[] _foodSlots;
 
     private void Awake()
     {
         _foodSlots = _foodSlotGrid.GetComponentsInChildren<FoodSlot>();
+        _dropZone.OnDrop += OnDrop;
+    }
+
+    void OnDrop(GameObject obj, PointerEventData data) {
+        Debug.Log(data.pointerDrag.GetComponent<FoodItem>().Data.name + " dropped on " + obj.name);
     }
 
     private void Start()

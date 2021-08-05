@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lollypop
   m_EditorClassIdentifier: 
   name: Lollypop
-  spriteImage: {fileID: 21300000, guid: 2001615e8bea9410d8f6cfd4e49470b0, type: 3}
+  spriteImage: {fileID: 21300000, guid: 9dad31ed6918c4e548289ea0284b4f02, type: 3}
   jokeItem: 0
   dessert: 1
   produce: 0

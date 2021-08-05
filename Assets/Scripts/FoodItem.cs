@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Image))]
 public class FoodItem : MonoBehaviour
 {
+    public SO_Food Data => _data;
+
     [SerializeField] SO_Food _data;
 
     Image _image;
