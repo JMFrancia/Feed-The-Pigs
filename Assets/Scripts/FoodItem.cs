@@ -11,6 +11,7 @@ public class FoodItem : MonoBehaviour
 
     public FoodSlot slot;
 
+    bool _disposing = false;
     Image _image;
 
     private void Awake()
@@ -26,7 +27,14 @@ public class FoodItem : MonoBehaviour
 
     public void ReturnToSlot()
     {
+        if (_disposing)
+            return;
         LeanTween.move(gameObject, slot.transform, .5f).setEase(LeanTweenType.easeOutBounce);
+    }
+
+    public void Dispose() {
+        _disposing = true;
+        LeanTween.alpha(_image.rectTransform, 0f, .3f).setOnComplete(() => Destroy(gameObject));
     }
 
     public void SetData(SO_Food data)

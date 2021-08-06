@@ -30,7 +30,7 @@ public class FoodSlot : MonoBehaviour
         item.GetComponent<RectTransform>().sizeDelta = new Vector2(_rectTransform.rect.width, _rectTransform.rect.width);
         if (animation)
         {
-            LeanTween.move(item.gameObject, transform, .2f);
+            LeanTween.move(item.gameObject, transform, .2f).setEase(LeanTweenType.notUsed);
         }
         else
         {

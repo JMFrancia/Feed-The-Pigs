@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using System.Linq;
 using DentedPixel;
 
+[RequireComponent(typeof(StateManager))]
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject _foodSlotGrid;
@@ -13,19 +14,35 @@ public class GameManager : MonoBehaviour
     [SerializeField] FoodSlot[] _dropSlots;
 
     FoodSlot[] _foodSlots;
-    int correctItems = 0;
+    int _correctItems = 0;
+    StateManager _stateManager;
 
     private void Awake()
     {
+        _stateManager = GetComponent<StateManager>();
         _foodSlots = _foodSlotGrid.GetComponentsInChildren<FoodSlot>();
         _dropZone.OnDrop += OnDrop;
+        Initialize();
+    }
+
+
+
+    void Initialize()
+    {
+        _stateManager.AddState(Constants.GameStates.INTRO);
+        _stateManager.AddState(Constants.GameStates.REQUEST);
+        _stateManager.AddState(Constants.GameStates.PLAY);
+        _stateManager.AddState(Constants.GameStates.SUCCESS);
+        _stateManager.AddTransition(Constants.GameStates.INTRO, Constants.GameStates.REQUEST);
+        _stateManager.AddTransition(Constants.GameStates.REQUEST, Constants.GameStates.PLAY);
+        _stateManager.AddTransition(Constants.GameStates.PLAY, Constants.GameStates.SUCCESS);
+        _stateManager.AddTransition(Constants.GameStates.SUCCESS, Constants.GameStates.INTRO);
     }
 
     void OnDrop(GameObject obj, PointerEventData data) {
         FoodItem item = data.pointerDrag.GetComponent<FoodItem>();
-        Debug.Log(item.Data.name + " dropped on " + obj.name);
 
-        if (correctItems < 3) {
+        if (_correctItems < 3) {
             if (item.Data.produce)
             {
                 CorrectItem(item);
@@ -39,13 +56,13 @@ public class GameManager : MonoBehaviour
     void CorrectItem(FoodItem item)
     {
         Debug.Log("Correct!");
-        _dropSlots[correctItems++].AssignItem(item, true);
+        _dropSlots[_correctItems++].AssignItem(item, true);
         item.GetComponent<Draggable>().Locked = true;
     }
 
     void WrongItem(FoodItem item) {
         Debug.Log("Wrong!");
-        item.ReturnToSlot();
+        item.Dispose();
     }
 
     private void Start()

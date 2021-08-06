@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 0}
+  slot: {fileID: 0}
 --- !u!225 &-6997260173006693651
 CanvasGroup:
   m_ObjectHideFlags: 0
