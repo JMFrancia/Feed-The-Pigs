@@ -20,10 +20,11 @@ public class FoodSlot : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, new Vector3(width, width, width));
     }
 
-    public void GenerateFoodItem(FoodType type) {
+    public FoodItem GenerateFoodItem(FoodType type) {
         FoodItem item = GameObject.Instantiate(foodItemPrefab, transform).GetComponent<FoodItem>();
         item.SetData(Resources.Load<SO_Food>($"{_foodPath}{type}"));
         AssignItem(item);
+        return item;
     }
 
     public void AssignItem(FoodItem item, bool animation = false) {

@@ -1,25 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(StaticUpdate))]
 public class StateManager : MonoBehaviour
 {
     public GameState Current => _current;
     public Dictionary<string, GameState> States => _states;
 
+    public static bool Waiting = false;
+
     Dictionary<string, GameState> _states = new Dictionary<string, GameState>();
     Dictionary<GameState, Dictionary<string, GameState>> _transitions = new Dictionary<GameState, Dictionary<string, GameState>>();
     GameState _current;
+    GameState _next;
+    bool _transitionNextFrame = false;
+    bool _startRoutine = false;
+    bool _exitRoutine = false;
 
-    private void Awake()
-    {
-        StaticUpdate.OnUpdate += Update;        
-    }
-
-    //Via static update
     private void Update()
     {
-        _current?.OnUpdate?.Invoke();
+        if (_transitionNextFrame) {
+            _current = _next;
+            _next = null;
+            _transitionNextFrame = false;
+
+            _current.OnStart?.Invoke();
+            if (_current.waitForStartToComplete) {
+                WaitForOnStartToFinish();
+            }
+            return;
+        }
+
+        bool dontUpdate = (_startRoutine && !_current.callUpdateDuringStart) ||
+                            (_exitRoutine && !_current.callUpdateDuringExit);
+        if (!dontUpdate)
+        {
+            _current?.OnUpdate?.Invoke();
+        }
     }
 
     public void Initialize(string name, bool callOnStart = true) {
@@ -31,6 +48,9 @@ public class StateManager : MonoBehaviour
         if (callOnStart)
         {
             _current.OnStart?.Invoke();
+            if (_current.waitForStartToComplete) {
+                WaitForOnStartToFinish();
+            }
         }
     }
 
@@ -46,9 +66,9 @@ public class StateManager : MonoBehaviour
 
     public void AddTransition(GameState state1, GameState state2) {
         if (!_transitions.ContainsKey(state1)) {
-            _transitions[state1].Add(state2.Name, state2);
+            _transitions.Add(state1, new Dictionary<string, GameState>());
         }
-        _transitions.Add(state1, new Dictionary<string, GameState>());
+        _transitions[state1].Add(state2.Name, state2);
     }
 
     public void AddTransition(string name1, string name2)
@@ -68,11 +88,45 @@ public class StateManager : MonoBehaviour
     public void Transition(string name) {
         if (!_transitions[_current].ContainsKey(name))
         {
-            Debug.LogError($"Illegally trying to transition from state {name} to state {name}; no such transition exists");
+            Debug.LogError($"Illegally trying to transition from state {_current.Name} to state {name}; no such transition exists");
             return;
         }
         _current.OnExit?.Invoke();
-        _current = _transitions[_current][name];
-        _current.OnStart?.Invoke();
+        if (_current.waitForExitToComplete)
+        {
+            WaitForOnExitToFinish(name);
+        }
+        else
+        {
+            TransitionOnNextFrame(name);
+        }
+    }
+
+    void WaitForOnStartToFinish() {
+        _startRoutine = true;
+        StartCoroutine(WaitForCallbackToFinish(false));
+    }
+
+    void WaitForOnExitToFinish(string nextStateName) {
+        _exitRoutine = true;
+        StartCoroutine(WaitForCallbackToFinish(true, nextStateName));
+    }
+
+    IEnumerator WaitForCallbackToFinish(bool transitionOnComplete, string nextStateName = null) {
+        Waiting = true;
+        while (Waiting) {
+            yield return null;
+        }
+        _startRoutine = false;
+        _exitRoutine = false;
+        if (transitionOnComplete)
+        {
+            TransitionOnNextFrame(name);
+        }
+    }
+
+    void TransitionOnNextFrame(string name) {
+        _next = _transitions[_current][name];
+        _transitionNextFrame = true;
     }
 }
