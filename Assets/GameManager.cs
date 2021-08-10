@@ -20,22 +20,32 @@ public class GameManager : MonoBehaviour
     List<FoodItem> _items;
     int _categoryIndex = 0;
     RequestCategory _currentCategory => _categories[_categoryIndex];
+    CircularQueue<FoodType> _foodTypes;
 
     private void Awake()
     {
         _stateManager = GetComponent<StateManager>();
         _foodSlots = _foodSlotGrid.GetComponentsInChildren<FoodSlot>();
         _dropZone.OnDrop += OnDrop;
+        InitializeFoodTypes();
         _categories = Enum.GetValues(typeof(RequestCategory)).Cast<RequestCategory>().OrderBy(x => Guid.NewGuid()).ToList();
         InitializeStates();
     }
 
-    void GenerateFoods() {
+    void InitializeFoodTypes()
+    {
+        List<FoodType> allTypes = Enum.GetValues(typeof(FoodType)).Cast<FoodType>().ToList();
+        _foodTypes = new CircularQueue<FoodType>(allTypes);
+        _foodTypes.Shuffle();
+    }
+
+    void GenerateFoods()
+    {
         _items = new List<FoodItem>();
-        List<FoodType> shuffledTypes = GetShuffledFoodTypes();
+        _foodTypes.Shuffle();
         for (int n = 0; n < _foodSlots.Length; n++)
         {
-            _items.Add(_foodSlots[n].GenerateFoodItem(shuffledTypes[n % shuffledTypes.Count]));
+            _items.Add(_foodSlots[n].GenerateFoodItem(_foodTypes.Next()));
         }
     }
 
@@ -160,14 +170,5 @@ public class GameManager : MonoBehaviour
 
     
 
-    List<FoodType> GetShuffledFoodTypes() {
-        List<FoodType> allTypes = Enum.GetValues(typeof(FoodType)).Cast<FoodType>().ToList();
-        System.Random r = new System.Random();
-        return allTypes.OrderBy(x => r.Next()).ToList();
-    }
 
-    FoodType GetRandomFoodType() {
-        Array allTypes = Enum.GetValues(typeof(FoodType));
-        return (FoodType) allTypes.GetValue(UnityEngine.Random.Range(0, allTypes.Length));
-    }
 }

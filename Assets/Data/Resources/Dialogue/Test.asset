@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a098c775f93b4b2d8ffd7be3f35d9b0, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
-  name: Test
+  convo: 
+  oneOffWithAlternates: 1
   audioClips:
   - {fileID: 8300000, guid: 23bdc94c6df504225a62f5590d9f3518, type: 3}
   - {fileID: 8300000, guid: bed1a3f97008f424abbf9db5eaab79b3, type: 3}
   - {fileID: 8300000, guid: 7db3608fe438c4a299f464fcbb83afb0, type: 3}
+  speaker1Clips: []
+  speaker2Clips: []
