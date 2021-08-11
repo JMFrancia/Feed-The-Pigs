@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a098c775f93b4b2d8ffd7be3f35d9b0, type: 3}
+  m_Name: Misc_wrong
+  m_EditorClassIdentifier: 
+  convo: Misc_wrong
+  oneOffWithAlternates: 1
+  speaker1Clips:
+  - {fileID: 8300000, guid: 1b08f98a944fa40ab9763d7782acd888, type: 3}
+  - {fileID: 8300000, guid: 9ce890711061b4d68b2fc5a50dcd29fe, type: 3}
+  - {fileID: 8300000, guid: d518beba8f4304d14b3237d031f45496, type: 3}
+  - {fileID: 8300000, guid: 532a49e54cd554857a7598c095453a9c, type: 3}
+  - {fileID: 8300000, guid: 6edabaa6f0f7a4840bec25429e057a20, type: 3}
+  - {fileID: 8300000, guid: 54c6ccea0b6de45e59391510443e06e1, type: 3}
+  speaker2Clips:
+  - {fileID: 8300000, guid: 205ffdb3bd6804cc4833d356bd5df27c, type: 3}
+  - {fileID: 8300000, guid: 0228632712c3f4632a254bb3063dda6d, type: 3}
+  - {fileID: 8300000, guid: 7b7d924b7412a42b6b0035df76f90a02, type: 3}
+  - {fileID: 8300000, guid: 6a7ef7d4b644142f2a3767c4856b6870, type: 3}
+  - {fileID: 8300000, guid: 06ce43102574f4736a93477652775d77, type: 3}
+  - {fileID: 8300000, guid: 504b03ba6c7d541328b5c57cd3718f9a, type: 3}

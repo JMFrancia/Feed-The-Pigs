@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a098c775f93b4b2d8ffd7be3f35d9b0, type: 3}
+  m_Name: Junk_grapes
+  m_EditorClassIdentifier: 
+  convo: Junk_grapes
+  oneOffWithAlternates: 1
+  speaker1Clips:
+  - {fileID: 8300000, guid: d426e071327f14c65bc6e0ad1697223c, type: 3}
+  speaker2Clips:
+  - {fileID: 8300000, guid: 3b6b97bdd0c48435486bad5b68acb821, type: 3}

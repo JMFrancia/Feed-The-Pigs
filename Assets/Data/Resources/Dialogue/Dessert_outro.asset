@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a098c775f93b4b2d8ffd7be3f35d9b0, type: 3}
+  m_Name: Dessert_outro
+  m_EditorClassIdentifier: 
+  convo: Dessert_outro
+  oneOffWithAlternates: 0
+  speaker1Clips:
+  - {fileID: 8300000, guid: c557eaa9dd0ed46d0bfbe9a58877ef61, type: 3}
+  - {fileID: 8300000, guid: ad44270e52e2643d585fba43a1655566, type: 3}
+  - {fileID: 8300000, guid: 91c44526c132546dab4da4800ca7dda7, type: 3}
+  speaker2Clips:
+  - {fileID: 8300000, guid: 69f4b05d873d44877aa01fd574f4f5d7, type: 3}
+  - {fileID: 8300000, guid: 8b4181d80c2fe4733aebe26b6615d4a3, type: 3}
+  - {fileID: 8300000, guid: 0c3a0246886ad46f5ba5c57070903cef, type: 3}

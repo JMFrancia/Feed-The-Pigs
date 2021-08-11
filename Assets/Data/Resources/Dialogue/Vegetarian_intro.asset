@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a098c775f93b4b2d8ffd7be3f35d9b0, type: 3}
+  m_Name: Vegetarian_intro
+  m_EditorClassIdentifier: 
+  convo: Vegetarian_intro
+  oneOffWithAlternates: 0
+  speaker1Clips:
+  - {fileID: 8300000, guid: 17645ed9c8c5c421a9bbcaceff796e35, type: 3}
+  - {fileID: 8300000, guid: 5a9414e9ea6f74e7b812be79e5e1e21d, type: 3}
+  - {fileID: 8300000, guid: 5e39bd8d4add04f098fec995d26a3e45, type: 3}
+  speaker2Clips:
+  - {fileID: 8300000, guid: b00780b2c0f494d2499177c46550fea7, type: 3}
+  - {fileID: 8300000, guid: b74bae0bf54f34ff0bbadf517cde81e3, type: 3}
+  - {fileID: 8300000, guid: 409985317bf494a69963cd60650338bd, type: 3}

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a098c775f93b4b2d8ffd7be3f35d9b0, type: 3}
+  m_Name: Vegetarian_drumstrick
+  m_EditorClassIdentifier: 
+  convo: Vegetarian_drumstick
+  oneOffWithAlternates: 1
+  speaker1Clips:
+  - {fileID: 8300000, guid: 9c6cd72ce15844cfab444f8cf981cdda, type: 3}
+  speaker2Clips:
+  - {fileID: 8300000, guid: ed1718b7aa76045b2b0508fe24ad38df, type: 3}

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -13,6 +14,17 @@ public class DialogueManager : MonoBehaviour
 
     Dictionary<SO_Dialogue, int> _lastStarted = new Dictionary<SO_Dialogue, int>();
     Dictionary<SO_Dialogue, CircularQueue<AudioClip>> _oneOffs = new Dictionary<SO_Dialogue, CircularQueue<AudioClip>>();
+
+    const string DATA_PATH = "Dialogue/";
+
+    /*
+     * Loads the dialogue specified by name and plays it, invokes optional callback when complete
+     * Returns SFX ID
+     */
+    public int PlayDialogue(string dialogueName, System.Action callback = null) {
+        SO_Dialogue dialogue = Resources.Load<SO_Dialogue>($"{DATA_PATH}{dialogueName}");
+        return PlayDialogue(dialogue, callback);
+    }
 
     /*
      * Plays the dialogue specified, invokes optional callback when complete
@@ -41,6 +53,18 @@ public class DialogueManager : MonoBehaviour
     }
 
     /*
+     * Returns total length of a dialogue in seconds
+     * If one-off with alternates, returns average length
+     */
+    public float GetDialogueLength(SO_Dialogue dialogue) {
+        float sumTotal = dialogue.speaker1Clips.Select(x => x.length).Sum();
+        if (dialogue.oneOffWithAlternates) {
+            return sumTotal / dialogue.speaker1Clips.Length;
+        }
+        return sumTotal;
+    }
+
+    /*
      * Stops the dialogue with given ID
      * Returns true if dialogue was found & stopped
      */
@@ -58,6 +82,21 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Destroy(this);
+        }
+    }
+
+    void PlayTestDialogue(int times)
+    {
+        StartCoroutine(PlayTestDialogueNTimes(testDialogue, times));
+    }
+
+    IEnumerator PlayTestDialogueNTimes(SO_Dialogue dialogue, int total)
+    {
+        float dialogueLength = GetDialogueLength(dialogue);
+        for (int n = 0; n < total; n++)
+        {
+            PlayDialogue(dialogue);
+            yield return new WaitForSeconds(dialogueLength + 1f);
         }
     }
 

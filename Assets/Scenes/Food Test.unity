@@ -2153,7 +2153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d50fcdf436654458bc18da03a7ac054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testDialogue: {fileID: 11400000, guid: 30a6488a356354fdbbede1db64b77979, type: 2}
+  testDialogue: {fileID: 11400000, guid: d2190c8f225a442c683dc56d857e597f, type: 2}
+  _convoGap: 0.5
 --- !u!114 &1914687704
 MonoBehaviour:
   m_ObjectHideFlags: 0

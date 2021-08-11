@@ -8,5 +8,8 @@
     Grapes,
     Hat,
     Lollypop,
-    Pizza
+    Pizza,
+    Shoe,
+    Lightbulb,
+    Bone
 }
