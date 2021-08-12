@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 525be8cca25cd45a183d63427bf699bb, type: 3}
   m_Name: Grapes
   m_EditorClassIdentifier: 
-  name: Grapes
+  type: 6
   spriteImage: {fileID: 21300000, guid: 9e5cb3694a5e349cc8435f73b7c28c39, type: 3}
   jokeItem: 0
   dessert: 1
-  produce: 1
+  vegetarian: 1
   healthy: 1
   junk: 0
   raw: 1

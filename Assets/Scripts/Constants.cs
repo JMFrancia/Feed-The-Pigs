@@ -10,7 +10,7 @@ public static class Constants
     }
 
     public static Dictionary<RequestCategory, string> Requests = new Dictionary<RequestCategory, string>() {
-        { RequestCategory.Produce, "produce" },
+        { RequestCategory.Vegetarian, "vegetarian" },
         { RequestCategory.Dessert, "desserts" },
         { RequestCategory.Junk, "junk foods" },
         { RequestCategory.Healthy, "healthy foods" },

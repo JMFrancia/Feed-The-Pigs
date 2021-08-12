@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 525be8cca25cd45a183d63427bf699bb, type: 3}
   m_Name: Chicken
   m_EditorClassIdentifier: 
-  name: Chicken
+  type: 3
   spriteImage: {fileID: 21300000, guid: 0beeb7452de004942a53395280bb4e9e, type: 3}
   jokeItem: 0
   dessert: 0

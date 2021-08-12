@@ -14,7 +14,7 @@ public class ConvoManager : MonoBehaviour
     Dictionary<RequestCategory, string> _categoryIntros;
     Dictionary<RequestCategory, string> _categoryOutros;
     Dictionary<RequestCategory, string> _specificWrongChoiceItems;
-    Dictionary<FoodType, string> _oddChoiceItems;
+    Dictionary<FoodType, string> _jokeItems;
 
     DialogueManager _dialogueManager;
 
@@ -51,11 +51,11 @@ public class ConvoManager : MonoBehaviour
     }
 
     /*
-     * Play odd choice item convo
+     * Play joke choice item convo
      * Returns the SFX ID
      */
-    public int PlayOddChoice(FoodType type, System.Action callback) {
-        return _dialogueManager.PlayDialogue(_oddChoiceItems[type], callback);
+    public int PlayJokeChoice(FoodType type, System.Action callback = null) {
+        return _dialogueManager.PlayDialogue(_jokeItems[type], callback);
     }
 
     /*
@@ -90,7 +90,7 @@ public class ConvoManager : MonoBehaviour
             { RequestCategory.Dessert, Constants.Convos.DESSERT_INTRO },
             { RequestCategory.Healthy, Constants.Convos.HEALTHY_INTRO },
             { RequestCategory.Junk, Constants.Convos.JUNK_INTRO },
-            { RequestCategory.Produce, Constants.Convos.VEGETARIAN_INTRO },
+            { RequestCategory.Vegetarian, Constants.Convos.VEGETARIAN_INTRO },
             { RequestCategory.Raw, Constants.Convos.RAW_INTRO }
         };
 
@@ -98,7 +98,7 @@ public class ConvoManager : MonoBehaviour
             { RequestCategory.Dessert, Constants.Convos.DESSERT_OUTRO },
             { RequestCategory.Healthy, Constants.Convos.HEALTHY_OUTRO },
             { RequestCategory.Junk, Constants.Convos.JUNK_OUTRO },
-            { RequestCategory.Produce, Constants.Convos.VEGETARIAN_OUTRO },
+            { RequestCategory.Vegetarian, Constants.Convos.VEGETARIAN_OUTRO },
             { RequestCategory.Raw, Constants.Convos.RAW_OUTRO }
         };
 
@@ -106,11 +106,11 @@ public class ConvoManager : MonoBehaviour
             { RequestCategory.Dessert, Constants.Convos.DESSERT_CARROT },
             { RequestCategory.Healthy, Constants.Convos.HEALTHY_FRIES },
             { RequestCategory.Junk, Constants.Convos.JUNK_GRAPES },
-            { RequestCategory.Produce, Constants.Convos.VEGETARIAN_DRUMSTICK },
+            { RequestCategory.Vegetarian, Constants.Convos.VEGETARIAN_DRUMSTICK },
             { RequestCategory.Raw, Constants.Convos.RAW_CAKE }
         };
 
-        _oddChoiceItems = new Dictionary<FoodType, string>() {
+        _jokeItems = new Dictionary<FoodType, string>() {
             { FoodType.Shoe, Constants.Convos.ITEM_SHOE },
             { FoodType.Lightbulb, Constants.Convos.ITEM_LIGHTBULB },
             { FoodType.Bone, Constants.Convos.ITEM_BONE }

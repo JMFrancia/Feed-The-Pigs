@@ -1,5 +1,5 @@
 ﻿public enum RequestCategory {
-    Produce,
+    Vegetarian,
     Dessert,
     Healthy,
     Junk,

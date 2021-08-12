@@ -6,6 +6,7 @@ using System.Linq;
 using TMPro;
 
 [RequireComponent(typeof(StateManager))]
+[RequireComponent(typeof(ConvoManager))]
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject _foodSlotGrid;
@@ -21,15 +22,27 @@ public class GameManager : MonoBehaviour
     int _categoryIndex = 0;
     RequestCategory _currentCategory => _categories[_categoryIndex];
     CircularQueue<FoodType> _foodTypes;
+    ConvoManager _convoManager;
+
+    Dictionary<RequestCategory, FoodType> _specificWrongItems;
 
     private void Awake()
     {
         _stateManager = GetComponent<StateManager>();
+        _convoManager = GetComponent<ConvoManager>();
         _foodSlots = _foodSlotGrid.GetComponentsInChildren<FoodSlot>();
         _dropZone.OnDrop += OnDrop;
         InitializeFoodTypes();
         _categories = Enum.GetValues(typeof(RequestCategory)).Cast<RequestCategory>().OrderBy(x => Guid.NewGuid()).ToList();
         InitializeStates();
+
+        _specificWrongItems = new Dictionary<RequestCategory, FoodType>() {
+            { RequestCategory.Dessert, FoodType.Carrot },
+          //  { RequestCategory.Raw, FoodType.Cake },
+            { RequestCategory.Vegetarian, FoodType.Chicken },
+            { RequestCategory.Junk, FoodType.Grapes }//,
+           // { RequestCategory.Healthy, FoodType.Fries }
+        };
     }
 
     void InitializeFoodTypes()
@@ -58,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     void InitializeStates()
     {
-        _stateManager.CreateState(Constants.GameStates.INTRO, onStart: OnEnterIntro);
+        _stateManager.CreateState(Constants.GameStates.INTRO, onStart: OnEnterIntro, waitForStart: true);
         _stateManager.CreateState(Constants.GameStates.REQUEST, onStart: OnEnterRequest);
         _stateManager.CreateState(Constants.GameStates.PLAY, onStart: OnEnterPlay);
         _stateManager.CreateState(Constants.GameStates.SUCCESS, onStart: OnEnterSuccess);
@@ -74,15 +87,21 @@ public class GameManager : MonoBehaviour
         //Bring in plate UI
         //OnComplete: Transition to Request
         Debug.Log("Entering intro");
-        _stateManager.Transition(Constants.GameStates.REQUEST);
+        _convoManager.PlayGameIntro(() => {
+            _stateManager.CompleteTransition();
+            _stateManager.Transition(Constants.GameStates.REQUEST);
+        });
     }
 
     void OnEnterRequest() {
         //Play boar request. On complete, Bring in food UI. On Complete, transition to Play
         Debug.Log("Entering request");
         _categoryIndex = (_categoryIndex + 1) % _categories.Count;
-        SetRequestText(_currentCategory);
-        _stateManager.Transition(Constants.GameStates.PLAY);
+        _convoManager.PlayCategoryIntro(_currentCategory, () => {
+            SetRequestText(_currentCategory);
+            _stateManager.CompleteTransition();
+            _stateManager.Transition(Constants.GameStates.PLAY);
+        }); 
     }
 
     void OnEnterPlay() {
@@ -128,8 +147,8 @@ public class GameManager : MonoBehaviour
             case RequestCategory.Junk:
                 result = item.Data.junk;
                 break;
-            case RequestCategory.Produce:
-                result = item.Data.produce;
+            case RequestCategory.Vegetarian:
+                result = item.Data.vegetarian;
                 break;
             case RequestCategory.Raw:
                 result = item.Data.raw;
@@ -145,7 +164,11 @@ public class GameManager : MonoBehaviour
         item.GetComponent<Draggable>().Locked = true;
         if (_correctItems == 3)
         {
-            _stateManager.Transition(Constants.GameStates.SUCCESS);
+            _convoManager.PlayCorrect(() =>
+            {
+                _stateManager.CompleteTransition();
+                _stateManager.Transition(Constants.GameStates.SUCCESS);
+            });
             _correctItems = 0;
             //Play correct SFX
             //Lock UI until complete
@@ -153,6 +176,7 @@ public class GameManager : MonoBehaviour
 
         }
         else {
+            _convoManager.PlayCorrect();
             //Play correct SFX
             //Lock UI until complete
         }
@@ -160,9 +184,18 @@ public class GameManager : MonoBehaviour
 
     void WrongItem(FoodItem item)
     {
-        //If joke item, play joke SFX
-        //Elif specific wrong for category, play specific wrong SFX
-        //Elif play wrong SFX
+        if (item.Data.jokeItem)
+        {
+            _convoManager.PlayJokeChoice(item.Data.type);
+        }
+        else if (item.Data.type == _specificWrongItems[_currentCategory])
+        {
+            _convoManager.PlaySpecificWrong(_currentCategory);
+        }
+        else
+        {
+            _convoManager.PlayWrong();
+        }
         Debug.Log("Wrong!");
         _items.Remove(item);
         item.Dispose();

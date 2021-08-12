@@ -7,7 +7,6 @@ public class StateManager : MonoBehaviour
     public GameState Current => _current;
     public Dictionary<string, GameState> States => _states;
 
-    public static bool Waiting = false;
 
     Dictionary<string, GameState> _states = new Dictionary<string, GameState>();
     Dictionary<GameState, Dictionary<string, GameState>> _transitions = new Dictionary<GameState, Dictionary<string, GameState>>();
@@ -16,6 +15,7 @@ public class StateManager : MonoBehaviour
     bool _transitionNextFrame = false;
     bool _startRoutine = false;
     bool _exitRoutine = false;
+    bool _waiting = false;
 
     private void Update()
     {
@@ -58,8 +58,8 @@ public class StateManager : MonoBehaviour
         _states.Add(state.Name, state);
     }
 
-    public GameState CreateState(string name, System.Action onStart = null, System.Action onUpdate = null, System.Action onExit = null) {
-        GameState result = new GameState(name, onStart, onUpdate, onExit);
+    public GameState CreateState(string name, System.Action onStart = null, System.Action onUpdate = null, System.Action onExit = null, bool waitForStart = false, bool callUpdateDuringStart = true, bool waitForExit = false, bool callUpdateDuringExit = true) {
+        GameState result = new GameState(name, onStart, onUpdate, onExit, waitForStart,callUpdateDuringStart, waitForExit, callUpdateDuringExit);
         AddState(result);
         return result;
     }
@@ -83,6 +83,10 @@ public class StateManager : MonoBehaviour
             return;
         }
         AddTransition(_states[name1], _states[name2]);
+    }
+
+    public void CompleteTransition() {
+        _waiting = false;
     }
 
     public void Transition(string name) {
@@ -113,8 +117,8 @@ public class StateManager : MonoBehaviour
     }
 
     IEnumerator WaitForCallbackToFinish(bool transitionOnComplete, string nextStateName = null) {
-        Waiting = true;
-        while (Waiting) {
+        _waiting = true;
+        while (_waiting) {
             yield return null;
         }
         _startRoutine = false;

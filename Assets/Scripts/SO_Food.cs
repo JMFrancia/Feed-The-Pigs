@@ -5,11 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "Food", order = 1)]
 public class SO_Food : ScriptableObject
 {
-    public new string name;
+    public FoodType type;
     public Sprite spriteImage;
     public bool jokeItem;
     public bool dessert;
-    public bool produce;
+    public bool vegetarian;
     public bool healthy;
     public bool junk;
     public bool raw;

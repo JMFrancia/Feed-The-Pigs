@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 525be8cca25cd45a183d63427bf699bb, type: 3}
   m_Name: Pizza
   m_EditorClassIdentifier: 
-  name: Strawberry
+  type: 9
   spriteImage: {fileID: 21300000, guid: fe9d3c51a1a7c4691b7b6fb8556f926d, type: 3}
   jokeItem: 0
   dessert: 0
-  produce: 0
+  vegetarian: 1
   healthy: 0
   junk: 1
   raw: 0

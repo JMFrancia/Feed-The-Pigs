@@ -2089,6 +2089,7 @@ GameObject:
   - component: {fileID: 1914687702}
   - component: {fileID: 1914687703}
   - component: {fileID: 1914687704}
+  - component: {fileID: 1914687705}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -2154,7 +2155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testDialogue: {fileID: 11400000, guid: d2190c8f225a442c683dc56d857e597f, type: 2}
-  _convoGap: 0.5
+  _convoGap: 0.25
 --- !u!114 &1914687704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2169,6 +2170,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nAudiosources: 10
   _expandSize: 1
+--- !u!114 &1914687705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914687699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ba15686e7874054af7cc755777d789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1937496831
 GameObject:
   m_ObjectHideFlags: 0
