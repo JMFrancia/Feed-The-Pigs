@@ -2109,6 +2109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14db9afad499b47158fc78cb161caff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skipIntro: 1
   _foodSlotGrid: {fileID: 1676852101}
   _dropZone: {fileID: 730341296}
   _dropSlots:

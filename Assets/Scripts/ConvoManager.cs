@@ -23,7 +23,7 @@ public class ConvoManager : MonoBehaviour
      * Returns the SFX ID
      */
     public int PlayGameIntro(System.Action callback = null) {
-        return _dialogueManager.PlayDialogue(Constants.Convos.MISC_INTRO, callback);
+        return _dialogueManager.PlayDialogue(Constants.Convos.MISC_INTRO, callback: callback);
     }
 
     /*
@@ -31,7 +31,7 @@ public class ConvoManager : MonoBehaviour
      * Returns the SFX ID
      */
     public int PlayGameExit(System.Action callback = null) {
-        return _dialogueManager.PlayDialogue(Constants.Convos.MISC_EXIT, callback);
+        return _dialogueManager.PlayDialogue(Constants.Convos.MISC_EXIT, callback: callback);
     }
 
     /*
@@ -39,7 +39,7 @@ public class ConvoManager : MonoBehaviour
      * Returns the SFX ID
      */
     public int PlayIdle(System.Action callback = null) {
-        return _dialogueManager.PlayDialogue(Constants.Convos.MISC_IDLE, callback);
+        return _dialogueManager.PlayDialogue(Constants.Convos.MISC_IDLE, callback: callback);
     }
 
     /*
@@ -47,7 +47,7 @@ public class ConvoManager : MonoBehaviour
      * Returns the SFX ID
      */
     public int PlaySpecificWrong(RequestCategory category, System.Action callback = null) {
-        return _dialogueManager.PlayDialogue(_specificWrongChoiceItems[category], callback);
+        return _dialogueManager.PlayDialogue(_specificWrongChoiceItems[category], callback: callback);
     }
 
     /*
@@ -55,7 +55,7 @@ public class ConvoManager : MonoBehaviour
      * Returns the SFX ID
      */
     public int PlayJokeChoice(FoodType type, System.Action callback = null) {
-        return _dialogueManager.PlayDialogue(_jokeItems[type], callback);
+        return _dialogueManager.PlayDialogue(_jokeItems[type], callback: callback);
     }
 
     /*
@@ -63,7 +63,7 @@ public class ConvoManager : MonoBehaviour
      */
     public int PlayCategoryIntro(RequestCategory category, System.Action callback = null)
     {
-        return _dialogueManager.PlayDialogue(_categoryIntros[category], callback);
+        return _dialogueManager.PlayDialogue(_categoryIntros[category], callback: callback);
     }
 
     /*
@@ -71,17 +71,17 @@ public class ConvoManager : MonoBehaviour
      */
     public int PlayCategoryOutro(RequestCategory category, System.Action callback = null)
     {
-        return _dialogueManager.PlayDialogue(_categoryOutros[category], callback);
+        return _dialogueManager.PlayDialogue(_categoryOutros[category], callback: callback);
     }
 
     public int PlayCorrect(System.Action callback = null)
     {
-        return _dialogueManager.PlayDialogue(Constants.Convos.MISC_CORRECT, callback);
+        return _dialogueManager.PlayDialogue(Constants.Convos.MISC_CORRECT, callback: callback);
     }
 
     public int PlayWrong(System.Action callback = null)
     {
-        return _dialogueManager.PlayDialogue(Constants.Convos.MISC_WRONG, callback);
+        return _dialogueManager.PlayDialogue(Constants.Convos.MISC_WRONG, callback: callback);
     }
 
     private void Awake()

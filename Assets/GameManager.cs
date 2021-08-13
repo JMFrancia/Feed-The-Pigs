@@ -9,6 +9,8 @@ using TMPro;
 [RequireComponent(typeof(ConvoManager))]
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField] bool skipIntro = false;
     [SerializeField] GameObject _foodSlotGrid;
     [SerializeField] DropZone _dropZone;
     [SerializeField] FoodSlot[] _dropSlots;
@@ -38,10 +40,10 @@ public class GameManager : MonoBehaviour
 
         _specificWrongItems = new Dictionary<RequestCategory, FoodType>() {
             { RequestCategory.Dessert, FoodType.Carrot },
-          //  { RequestCategory.Raw, FoodType.Cake },
+            { RequestCategory.Raw, FoodType.Cake },
             { RequestCategory.Vegetarian, FoodType.Chicken },
-            { RequestCategory.Junk, FoodType.Grapes }//,
-           // { RequestCategory.Healthy, FoodType.Fries }
+            { RequestCategory.Junk, FoodType.Grapes },
+            { RequestCategory.Healthy, FoodType.Frenchfries }
         };
     }
 
@@ -79,7 +81,15 @@ public class GameManager : MonoBehaviour
         _stateManager.AddTransition(Constants.GameStates.REQUEST, Constants.GameStates.PLAY);
         _stateManager.AddTransition(Constants.GameStates.PLAY, Constants.GameStates.SUCCESS);
         _stateManager.AddTransition(Constants.GameStates.SUCCESS, Constants.GameStates.REQUEST);
-        _stateManager.Initialize(Constants.GameStates.INTRO);
+        if (skipIntro)
+        {
+            _stateManager.Initialize(Constants.GameStates.REQUEST);
+
+        }
+        else
+        {
+            _stateManager.Initialize(Constants.GameStates.INTRO);
+        }
     }
 
     void OnEnterIntro() {
@@ -162,6 +172,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Correct!");
         _dropSlots[_correctItems++].AssignItem(item, true);
         item.GetComponent<Draggable>().Locked = true;
+        Debug.Log("Correct: " + _correctItems);
         if (_correctItems == 3)
         {
             _convoManager.PlayCorrect(() =>

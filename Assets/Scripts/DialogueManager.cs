@@ -17,13 +17,24 @@ public class DialogueManager : MonoBehaviour
 
     const string DATA_PATH = "Dialogue/";
 
+    int _currentDialogueID;
+    int _currentOneOffID;
+
     /*
      * Loads the dialogue specified by name and plays it, invokes optional callback when complete
      * Returns SFX ID
      */
-    public int PlayDialogue(string dialogueName, System.Action callback = null) {
+    public int PlayDialogue(string dialogueName, bool interrupt = true, System.Action callback = null) {
         SO_Dialogue dialogue = Resources.Load<SO_Dialogue>($"{DATA_PATH}{dialogueName}");
+        if (interrupt) {
+            StopAll();
+        }
         return PlayDialogue(dialogue, callback);
+    }
+
+    public void StopAll() {
+        StopDialogue(_currentDialogueID);
+        StopOneOff(_currentOneOffID);
     }
 
     /*
@@ -34,7 +45,8 @@ public class DialogueManager : MonoBehaviour
         int sfxID;
         if (dialogue.oneOffWithAlternates)
         {
-            sfxID = PlayOneOff(dialogue);
+            sfxID = PlayOneOff(dialogue, callback);
+            _currentOneOffID = sfxID;
         }
         else {
             //Ensures that new speaker begins dialogue each time
@@ -48,6 +60,7 @@ public class DialogueManager : MonoBehaviour
             }
             AudioClip[] clips = StitchClips(dialogue, _lastStarted[dialogue]);
             sfxID = SFXManager.Instance.PlaySequentialSFX(clips, _convoGap, callback);
+            _currentDialogueID = sfxID;
         }
         return sfxID;
     }
@@ -71,6 +84,10 @@ public class DialogueManager : MonoBehaviour
     public bool StopDialogue(int id)
     {
         return SFXManager.Instance.StopSequentialSFX(id);
+    }
+
+    public void StopOneOff(int id) {
+        SFXManager.Instance.StopSFX(id);
     }
 
     private void Awake()
@@ -123,7 +140,7 @@ public class DialogueManager : MonoBehaviour
      * Plays random audioclip from dialogue (for one-offs w/ alternates)
      * Returns SFX ID
      */
-    int PlayOneOff(SO_Dialogue dialogue) {
+    int PlayOneOff(SO_Dialogue dialogue, System.Action callback = null) {
         CircularQueue<AudioClip> cq;
         if (_oneOffs.ContainsKey(dialogue))
         {
@@ -136,6 +153,6 @@ public class DialogueManager : MonoBehaviour
             cq.Shuffle();
             _oneOffs[dialogue] = cq;
         }
-        return SFXManager.Instance.PlaySFX(cq.Next());
+        return SFXManager.Instance.PlaySFX(cq.Next(), callback: callback);
     }
 }

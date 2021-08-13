@@ -6,10 +6,16 @@
     Chocolate,
     Corn,
     Grapes,
-    Hat,
     Lollypop,
     Pizza,
     Shoe,
     Lightbulb,
-    Bone
+    Bone,
+    Banana,
+    Broccoli,
+    Cheeseburger,
+    Frenchfries,
+    Peanuts,
+    Steak,
+    Cake
 }

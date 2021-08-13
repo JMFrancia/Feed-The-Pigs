@@ -29,9 +29,9 @@ public class SFXManager : MonoBehaviour
     }
 
     //Returns ID for SFX to adjust later
-    public int PlaySFX(AudioClip clip, float volume = 1f)
+    public int PlaySFX(AudioClip clip, float volume = 1f, System.Action callback = null)
     {
-        return PlaySFXInternal(clip, volume, false);
+        return PlaySFXInternal(clip, volume, false, callback);
     }
 
     public void StopSFX(int id)
@@ -104,7 +104,7 @@ public class SFXManager : MonoBehaviour
         }
     }
 
-    int PlaySFXInternal(AudioClip clip, float volume, bool loop) {
+    int PlaySFXInternal(AudioClip clip, float volume, bool loop, System.Action callback = null) {
         if (!FreeSourceAvailable())
         {
             Debug.LogError($"Cannot play SFX {clip.name}; out of sources and no expansion");
@@ -119,15 +119,16 @@ public class SFXManager : MonoBehaviour
         src.Play();
         if (!loop)
         {
-            _activeCoroutines.Add(id, StartCoroutine(ResetSourceWhenComplete(src)));
+            _activeCoroutines.Add(id, StartCoroutine(OnSFXComplete(src, callback)));
         }
         return id;
     }
 
-    IEnumerator ResetSourceWhenComplete(AudioSource src)
+    IEnumerator OnSFXComplete(AudioSource src, System.Action callback = null)
     {
         yield return new WaitForSeconds(src.clip.length);
         ResetSource(src);
+        callback?.Invoke();
     }
 
     void ResetSource(AudioSource src) {

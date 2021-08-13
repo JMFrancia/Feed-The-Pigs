@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 525be8cca25cd45a183d63427bf699bb, type: 3}
-  m_Name: Hat
+  m_Name: Peanuts
   m_EditorClassIdentifier: 
-  type: 7
-  spriteImage: {fileID: 21300000, guid: ee6cd1d56ec3a4ff98230b9b237274ec, type: 3}
-  jokeItem: 1
+  type: 16
+  spriteImage: {fileID: 21300000, guid: 9b66a035da8674d36aed3accff79a696, type: 3}
+  jokeItem: 0
   dessert: 0
-  produce: 0
-  healthy: 0
+  vegetarian: 1
+  healthy: 1
   junk: 0
-  raw: 0
+  raw: 1
