@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/*
+ * Simple component to make UI draggable
+ */
 [RequireComponent(typeof(Image))]
 public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {

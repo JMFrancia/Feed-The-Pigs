@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Attempt at a simple game state manager.
+ * Could use some work, honestly.
+ * Not super intuitive.
+ */
 public class StateManager : MonoBehaviour
 {
     public GameState Current => _current;
@@ -39,6 +44,9 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    /*
+     * Begin state machine on a state previously added
+     */
     public void Initialize(string name, bool callOnStart = true) {
         if (!_states.ContainsKey(name)) {
             Debug.LogError($"Attempting to initialize non-existant state {name}");
@@ -54,16 +62,25 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    /*
+     * Add a game state to the manager
+     */
     public void AddState(GameState state) {
         _states.Add(state.Name, state);
     }
 
+    /*
+     * Create a state, add it to the manager, and return the result
+     */
     public GameState CreateState(string name, System.Action onStart = null, System.Action onUpdate = null, System.Action onExit = null, bool waitForStart = false, bool callUpdateDuringStart = true, bool waitForExit = false, bool callUpdateDuringExit = true) {
         GameState result = new GameState(name, onStart, onUpdate, onExit, waitForStart,callUpdateDuringStart, waitForExit, callUpdateDuringExit);
         AddState(result);
         return result;
     }
 
+    /*
+     * Add a transition between two states to the manager
+     */
     public void AddTransition(GameState state1, GameState state2) {
         if (!_transitions.ContainsKey(state1)) {
             _transitions.Add(state1, new Dictionary<string, GameState>());
@@ -71,6 +88,9 @@ public class StateManager : MonoBehaviour
         _transitions[state1].Add(state2.Name, state2);
     }
 
+    /*
+     * Add a transition between two states to the  manager (based on name)
+     */
     public void AddTransition(string name1, string name2)
     {
         if (!_states.ContainsKey(name1)) {
@@ -85,10 +105,17 @@ public class StateManager : MonoBehaviour
         AddTransition(_states[name1], _states[name2]);
     }
 
+    /*
+     * When running a custom OnStart or OnExit callback for a game state,
+     * call this function to let the manager know it's been completed
+     */
     public void CompleteTransition() {
         _waiting = false;
     }
 
+    /*
+     * Transition to the state with a given name
+     */
     public void Transition(string name) {
         if (!_transitions[_current].ContainsKey(name))
         {

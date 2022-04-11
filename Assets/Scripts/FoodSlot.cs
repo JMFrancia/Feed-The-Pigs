@@ -6,7 +6,7 @@ public class FoodSlot : MonoBehaviour
 
     RectTransform _rectTransform;
 
-    const string _foodPath = "Foods/";
+    const string FOOD_PATH = "Foods/";
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class FoodSlot : MonoBehaviour
 
     public FoodItem GenerateFoodItem(FoodType type) {
         FoodItem item = GameObject.Instantiate(foodItemPrefab, transform).GetComponent<FoodItem>();
-        item.SetData(Resources.Load<SO_Food>($"{_foodPath}{type}"));
+        item.SetData(Resources.Load<SO_Food>($"{FOOD_PATH}{type}"));
         AssignItem(item);
         return item;
     }

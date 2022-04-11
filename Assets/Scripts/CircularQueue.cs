@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
+/*
+ * Circular queue for when you want to iterate through a set of type T
+ */
 public class CircularQueue<T>
 {
     public int Length => _queue.Count;
@@ -22,24 +23,39 @@ public class CircularQueue<T>
         Add(items);
     }
 
+    /*
+     * Returns next item in the queue
+     */
     public T Next() {
         T result = Peek();
         IncrementIndex();
         return result;
     }
 
+    /*
+     * Peeks next item in the queue without iterating it
+     */
     public T Peek() {
         return _queue[_index];
     }
 
+    /*
+     * Adds item to the queue
+     */
     public void Add(T item) {
         _queue.Add(item);
     }
 
+    /*
+     * Adds multiple items to the queue
+     */
     public void Add(IEnumerable<T> items) {
         _queue.AddRange(items);
     }
 
+    /*
+     * Removes an item from the queue
+     */
     public void Remove(T item) {
         if (!_queue.Contains(item))
             return;
@@ -50,11 +66,17 @@ public class CircularQueue<T>
         _queue.RemoveAt(index);
     }
 
+    /*
+     * Empties the queue
+     */
     public void Clear() {
         _queue.Clear();
         _index = 0;
     }
 
+    /*
+     * Shuffles the queue
+     */
     public void Shuffle() {
         System.Random r = new System.Random();
         _queue = _queue.OrderBy(x => r.Next()).ToList();

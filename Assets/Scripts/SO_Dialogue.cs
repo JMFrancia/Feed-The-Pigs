@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/*
+ * To operate in conjunction with Dialogue Manager
+ */
 [CreateAssetMenu(fileName = "Data", menuName = "Dialogue", order = 1)]
 public class SO_Dialogue : ScriptableObject
 {

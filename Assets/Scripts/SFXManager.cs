@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * All-purpose SFX manager for games that don't need spacial SFX
+ */
 public class SFXManager : MonoBehaviour
 {
     [SerializeField] int _nAudiosources = 10;
@@ -14,26 +17,41 @@ public class SFXManager : MonoBehaviour
     Dictionary<int, Coroutine> _activeCoroutines;
     Dictionary<int, int> _sequentialActiveSources;
 
+    /*
+     * Returns volume of SFX with given ID
+     */
     public float GetSFXVolume(int id)
     {
         return _activeSources[id].volume;
     }
 
+    /*
+     * Sets volume of SFX with given ID
+     */
     public void SetSFXVolume(int id, float volume) {
         _activeSources[id].volume = volume;
     }
 
-    //Returns ID for SFX to adjust later
+    /*
+     * Plays an SFX on loop repeatedly
+     * Returns ID for SFX to adjust later
+     * */
     public int PlayLoopingSFX(AudioClip clip, float volume = 1f) {
         return PlaySFXInternal(clip, volume, true);
     }
 
-    //Returns ID for SFX to adjust later
+    /*
+    * Plays an SFX once
+    * Returns ID for SFX to adjust later
+    */
     public int PlaySFX(AudioClip clip, float volume = 1f, System.Action callback = null)
     {
         return PlaySFXInternal(clip, volume, false, callback);
     }
 
+    /*
+     * Stops an SFX with given ID
+     */
     public void StopSFX(int id)
     {
         AudioSource src;
@@ -44,6 +62,9 @@ public class SFXManager : MonoBehaviour
         }
     }
 
+    /*
+     * Stops all non-sequential SFX
+     */
     public void StopAllSFX() {
         foreach(int key in _activeSources.Keys)
         {
@@ -51,6 +72,10 @@ public class SFXManager : MonoBehaviour
         }
     }
 
+    /*
+     * Plays an array of SFX in a row
+     * Returns int ID for adjustment later
+     */
     public int PlaySequentialSFX(AudioClip[] clips, float gap = 0f, System.Action callback = null) {
         int id = clips.GetHashCode();
         Coroutine routine = StartCoroutine(PlaySequentialSFXInteral(id, clips, gap, callback));
@@ -58,7 +83,9 @@ public class SFXManager : MonoBehaviour
         return id;
     }
 
-    //Will not stop SFX dead, just prevent it from continuing
+    /*
+     * Stops a sequential SFX of given ID
+     */
     public bool StopSequentialSFX(int id) {
         Coroutine routine;
         if (_activeCoroutines.TryGetValue(id, out routine))

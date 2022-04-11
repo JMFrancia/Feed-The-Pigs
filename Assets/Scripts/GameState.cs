@@ -1,4 +1,9 @@
-﻿public class GameState
+﻿
+/*
+ * Works in conjunction with game state manager to have
+ * simple FSM with helpful callbacks
+ */
+public class GameState
 {
     public System.Action OnStart;
     public System.Action OnUpdate;
